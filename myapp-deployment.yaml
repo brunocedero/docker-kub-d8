@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: brunoacedero096/appdesafio8:latest  
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: myapp-storage
+          mountPath: /app/data
+      volumes:
+      - name: myapp-storage
+        emptyDir: {}
+  imagePullSecrets:
+  - name: regcred 
